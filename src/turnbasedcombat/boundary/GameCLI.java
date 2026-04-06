@@ -139,10 +139,17 @@ public class GameCLI {
             return performer;
         }
 
+        // --- AOE FIX: Skip Target Menu for Wizard Magic ---
+        if (action instanceof SpecialSkill && performer.getName().contains("Wizard")) {
+            return null; 
+        }
+        if (action instanceof UseItem && ((UseItem)action).getItem().getName().equals("Power Stone") && performer.getName().contains("Wizard")) {
+            return null; 
+        }
+
         boolean targetSelf = false;
         if (action instanceof UseItem) {
             Item item = ((UseItem)action).getItem();
-            // Power Stone targets an enemy so the skill can hit them!
             if (item.getName().equals("Power Stone")) {
                 targetSelf = false; 
             } else {
@@ -171,11 +178,19 @@ public class GameCLI {
     }
 
     public void displayActionExecution(Combatant performer, Action action, Combatant target) {
-        System.out.printf("%s uses %s on %s!%n",
-                performer.getName(), action.getName(), target.getName());
+        if (target == null && action instanceof SpecialSkill) {
+            System.out.printf("%s uses %s on ALL enemies!%n", performer.getName(), action.getName());
+        } else if (target == null && action instanceof UseItem && ((UseItem)action).getItem().getName().equals("Power Stone")) {
+            // Power stone handles its own printing for AoE
+        } else if (target != null) {
+            System.out.printf("%s uses %s on %s!%n",
+                    performer.getName(), action.getName(), target.getName());
+        }
     }
 
     public void displayActionResult(Combatant performer, Action action, Combatant target) {
+        if (target == null) return; // AoE skills handle their own damage printing
+        
         if (!target.isAlive()) {
             System.out.println(target.getName() + " has been defeated!");
         } else {

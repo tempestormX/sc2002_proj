@@ -13,7 +13,9 @@ public class Warrior extends Combatant {
     @Override
     public void executeSpecialSkill(Combatant target, List<Combatant> allCombatants) {
         target.takeDamage(this.attack);
-        target.addStatusEffect(new StunEffect(2));
+
+       //Apply stun effect for 3 turns, avoiding attack on round 6
+        target.addStatusEffect(new StunEffect(3));
     }
 
     @Override
