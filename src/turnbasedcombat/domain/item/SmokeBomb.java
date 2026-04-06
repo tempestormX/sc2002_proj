@@ -1,7 +1,7 @@
 package turnbasedcombat.domain.item;
 
 import turnbasedcombat.domain.character.Combatant;
-import turnbasedcombat.domain.effect.SmokeBombEffect;
+import java.util.List;
 
 public class SmokeBomb implements Item {
     private final String name = "Smoke Bomb";
@@ -19,7 +19,7 @@ public class SmokeBomb implements Item {
     }
 
     @Override
-    public void use(Combatant user, Combatant target) {
-        target.addStatusEffect(new SmokeBombEffect(duration));
+    public void use(Combatant user, Combatant target, List<Combatant> allCombatants) {
+        target.addStatusEffect(new turnbasedcombat.domain.effect.SmokeBombEffect(duration));
     }
 }

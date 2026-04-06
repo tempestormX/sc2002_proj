@@ -139,20 +139,25 @@ public class GameCLI {
             return performer;
         }
 
-        boolean targetSelf = action instanceof UseItem;
+        boolean targetSelf = false;
+        if (action instanceof UseItem) {
+            Item item = ((UseItem)action).getItem();
+            // Power Stone targets an enemy so the skill can hit them!
+            if (item.getName().equals("Power Stone")) {
+                targetSelf = false; 
+            } else {
+                targetSelf = true; // Potions and Smoke Bombs target self
+            }
+        }
+
         List<Combatant> possibleTargets = targetSelf ? allies : enemies;
 
         List<Combatant> aliveTargets = possibleTargets.stream()
                 .filter(Combatant::isAlive)
                 .toList();
 
-        if (aliveTargets.isEmpty()) {
-            return null;
-        }
-
-        if (aliveTargets.size() == 1) {
-            return aliveTargets.get(0);
-        }
+        if (aliveTargets.isEmpty()) return null;
+        if (aliveTargets.size() == 1) return aliveTargets.get(0);
 
         System.out.println("\nSelect a target:");
         for (int i = 0; i < aliveTargets.size(); i++) {

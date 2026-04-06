@@ -6,5 +6,5 @@ import java.util.List;
 public interface Item {
     String getName();
     String getDescription();
-    void use(Combatant user, Combatant target);
+    void use(Combatant user, Combatant target, List<Combatant> allCombatants);
 }

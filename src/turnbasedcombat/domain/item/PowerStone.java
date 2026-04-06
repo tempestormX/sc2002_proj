@@ -1,6 +1,7 @@
 package turnbasedcombat.domain.item;
 
 import turnbasedcombat.domain.character.Combatant;
+import java.util.List;
 
 public class PowerStone implements Item {
     private final String name = "Power Stone";
@@ -17,12 +18,8 @@ public class PowerStone implements Item {
     }
 
     @Override
-    public void use(Combatant user, Combatant target) {
-        // We pass 'null' for the target because the Power Stone is used ON the user, 
-        // but the user's skill (like Arcane Blast) will hit the enemies.
-        // You'll need to pass the actual enemy list from the Engine if required.
-        user.executeSpecialSkill(target, null); 
-        
+    public void use(Combatant user, Combatant target, List<Combatant> allCombatants) {
+        user.executeSpecialSkill(target, allCombatants); 
         System.out.println(user.getName() + " used a Power Stone to trigger their Special Skill for free!");
     }
 }

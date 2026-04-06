@@ -49,24 +49,18 @@ public class BattleEngine {
         for (Combatant combatant : turnOrder) {
             if (!combatant.isAlive() || checkGameEndingCondition()) continue;
 
-            // 1. UML Requirement: Apply existing status effects first
+            // FIX: Apply status effects AND decrease cooldowns at the START of the turn
             applyStatusEffects(combatant);
+            updateCoolDown(combatant); 
 
-            // 2. UML Requirement: Check for stun
             if (isStunned(combatant)) {
                 cli.displayStunned(combatant);
-                updateCoolDown(combatant); // Still update cooldowns if turn was skipped via Stun
                 continue;
             }
 
-            // 3. Take Turn
             executeTurnLogic(combatant, allCombatants);
-
-            // 4. UML Requirement: Update Cooldowns after turn
-            updateCoolDown(combatant);
         }
         
-        // 5. Advanced Logic Requirement: Check Backup Spawns at end of round
         triggerBackupSpawn();
         cli.displayTurnEnd(playerTeam, enemyTeam);
     }

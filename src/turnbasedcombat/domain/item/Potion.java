@@ -1,10 +1,11 @@
 package turnbasedcombat.domain.item;
 
 import turnbasedcombat.domain.character.Combatant;
+import java.util.List;
 
 public class Potion implements Item {
     private final String name = "Health Potion";
-    private final String description = "Restores HP to full.";
+    private final String description = "Restores 100 HP.";
 
     @Override
     public String getName() {
@@ -17,8 +18,7 @@ public class Potion implements Item {
     }
 
     @Override
-    public void use(Combatant user, Combatant target) {
-        int healAmount = target.getMaxHp() - target.getHp();
-        target.heal(healAmount);
+    public void use(Combatant user, Combatant target, List<Combatant> allCombatants) {
+        target.heal(100);
     }
 }

@@ -13,7 +13,7 @@ public abstract class Combatant {
     protected int attack;
     protected int defense;
     protected int speed;
-    protected int specialCooldown = 0; // Replaces Mana!
+    protected int specialCooldown = 0; 
     protected List<StatusEffect> statusEffects;
     protected List<Item> inventory;
 
