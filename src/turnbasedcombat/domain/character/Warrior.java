@@ -14,7 +14,7 @@ public class Warrior extends Combatant {
     public void executeSpecialSkill(Combatant target, List<Combatant> allCombatants) {
         target.takeDamage(this.attack);
 
-       //Apply stun effect for 3 turns, avoiding attack on round 6
+       //Apply stun effect for 3 turns, avoiding attack on round 6.  Enemy --> Warrior, Warrior --> Enemy, Enemy --> Warrior (exactly 3 turns)
         target.addStatusEffect(new StunEffect(3));
     }
 
